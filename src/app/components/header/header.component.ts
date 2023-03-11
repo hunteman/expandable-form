@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-  pageTitle: string; 
+  pageTitle!: string; 
 
   @Input () set title(val: string) {
     this.pageTitle = val;
