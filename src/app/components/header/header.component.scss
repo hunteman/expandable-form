@@ -1,4 +1,15 @@
 .header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 0 9px 0 rgba(141, 30, 214, 0.2);
+    background: #fff;
+    z-index: 9;
+
     &__title {
         font-size: 16px;
         text-align: center;
