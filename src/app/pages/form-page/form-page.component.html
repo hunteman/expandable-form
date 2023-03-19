@@ -1,20 +1,106 @@
 <div class="container">
     <main class="main">
-      <form (submit)="$event.preventDefault()">
-        <div class="input__group">
-          <label class="input-label">Текстовое поле</label>
-          <input type="text" class="input">
-          <span class="input-error">Введите текст</span>
-        </div>
-        <div class="input__group">
-          <label for="scales" class="input-checkbox">
-            <input type="checkbox" id="scales" name="scales" checked>
-            <span class="checkbox_mask"></span>
-            Scales
-          </label>
-        </div>
-        <a class="button button-repeat">+</a>
-        <button class="button">Сохранить</button>
+      <form [formGroup]="form" (ngSubmit)="$event.preventDefault()" *ngIf="formSettings">
+        <ng-container *ngFor="let field of formFields; index as i">
+          <ng-container [ngSwitch]="field.type">
+
+            <div class="input__group" *ngSwitchCase="'text'">
+              <label class="input-label">{{field.title}}</label>
+              <input class="input" 
+              [formControlName]="field.slug"
+              [type]="field.type" 
+              [id]="field.slug" 
+              [placeholder]="field.placeholder" 
+              [minLength]="field.configuration.minLength"
+              [maxLength]="field.configuration.maxLength">
+              <span class="input-error" *ngIf="form.controls[field.slug].invalid && form.controls[field.slug].touched">
+                {{field.validation[0].text}}
+              </span>
+            </div>
+
+            <div class="input__group" *ngSwitchCase="'checkbox'">
+              <div [formArrayName]="field.slug">
+                <ng-container *ngFor="let checkbox of field.configuration?.list; index as i">
+                  <label class="input-checkbox">
+                    <input 
+                    [formControlName]="i" 
+                    type="checkbox" 
+                    (change)="setCheckboxValue(field.slug)">
+                    <span class="checkbox_mask"></span>
+                    {{checkbox["title"]}}
+                  </label>
+                </ng-container>
+              </div>
+              <!-- <span class="input-error" *ngIf="field.slug.invalid && field.validation.type === 'required'">
+                {{field.validation[0].text}}
+              </span> -->
+            </div>
+
+
+            <div *ngSwitchCase="'repeater'">
+                <ng-container formArrayName="repeaters" *ngFor="let repeatForm of refForm('repeaters').controls; index as idx">
+                  <div class="repeat-form" [formGroupName]="idx">
+                    <h4 class="button-repeat mb-2">
+                      <span class="button-repeat__text mr-1">Repeat form {{idx+1}}</span>
+
+                      <span class="button repeat-icon remove_icon" (click)="removeRepeatForm(idx)">                      
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                            <title>Trash</title>
+                            <path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+                            <path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352"/>
+                            <path d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+                        </svg>
+                      </span>
+                    </h4>
+
+                    <ng-container *ngFor="let nestedField of field.configuration.fields;">
+                      <ng-container [ngSwitch]="nestedField.type">
+                        <div class="input__group" *ngSwitchCase="'text'">
+                          <label class="input-label">{{nestedField.title}}</label>
+                          <input class="input" 
+                          [formControlName]="nestedField.slug"
+                          [type]="nestedField.type" 
+                          [id]="nestedField.slug" 
+                          [placeholder]="nestedField.placeholder" 
+                          [minLength]="nestedField.configuration.minLength"
+                          [maxLength]="nestedField.configuration.maxLength">
+                          <!-- <span class="input-error" *ngIf="form.controls[field.slug].invalid && form.controls[field.slug].touched">
+                            {{field.validation[0].text}}
+                          </span> -->
+                        </div>
+
+                        <div class="input__group" *ngSwitchCase="'checkbox'">
+                          <div [formArrayName]="'repeat' + '-' + nestedField.slug + (idx+1)">
+                            <ng-container *ngFor="let checkbox of nestedField.configuration?.list; index as i">
+                              <label class="input-checkbox">
+                                <input 
+                                [formControlName]="i" 
+                                type="checkbox" 
+                                [id]="checkbox.id"
+                                (change)="setCheckboxValue('repeat' + '-' + nestedField.slug + (idx+1), idx)">
+                                <span class="checkbox_mask"></span>
+                                {{checkbox["title"]}}
+                              </label>
+                            </ng-container>
+                          </div>
+                          <!-- <span class="input-error" *ngIf="field.slug.invalid && field.validation.type === 'required'">
+                            {{field.validation[0].text}}
+                          </span> -->
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </ng-container>
+
+              <a class="button-repeat mt-3" (click)="setRepeatForm(field.configuration.fields)">
+                <span class="button repeat-icon">+</span>
+                <span class="button-repeat__text ml-1">{{field.configuration.addButtonTitle || 'add nested form'}}</span>
+              </a>
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <button class="button button_send" (click)="save()">Сохранить</button>
       </form>
     </main>
   </div>

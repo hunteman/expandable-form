@@ -22,22 +22,40 @@
     -o-transition: .25s;
 
     &-repeat {
-        width: 36px;
-        height: 36px;
-        min-width: auto;
-        display: table-cell;
-        vertical-align: middle;
-        font-size: 36px;
-        font-weight: normal;
-        line-height: 1;
-        padding: 0;
-        border-radius: 60px;
-        -webkit-border-radius: 60px;
-        -moz-border-radius: 60px;
-        -ms-border-radius: 60px;
-        -o-border-radius: 60px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
 
-        &:hover {
+        &__text {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+        
+        .repeat-icon {
+            width: 30px;
+            height: 30px;
+            min-width: auto;
+            display: table-cell;
+            vertical-align: middle;
+            font-size: 30px;
+            font-weight: normal;
+            line-height: 1;
+            padding: 0;
+            border-radius: 60px;
+            -webkit-border-radius: 60px;
+            -moz-border-radius: 60px;
+            -ms-border-radius: 60px;
+            -o-border-radius: 60px;
+        }
+
+        .remove_icon {
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        &:hover .repeat-icon {
             color: #fff;
         }
     }
@@ -45,4 +63,6 @@
     &:hover {
         background-color: var(--hovered-accent);
     }
+
+    &.button_send {margin-top: 50px;}
 }

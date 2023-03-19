@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap');
+
 @import "variables";
 @import "_button";
 @import "_input";
-
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap');
 
 *, *::after, *::before {
     box-sizing: border-box;
@@ -47,6 +47,26 @@ a {
     max-width: 700px;
     margin: 0 auto;
 }
+
+.mt-0 {margin-top: 0 !important;}
+.mt-1 {margin-top: 10px !important;}
+.mt-2 {margin-top: 15px !important;}
+.mt-3 {margin-top: 20px !important;}
+
+.mb-0 {margin-bottom: 0 !important;}
+.mb-1 {margin-bottom: 10px !important;}
+.mb-2 {margin-bottom: 15px !important;}
+.mb-3 {margin-bottom: 20px !important;}  
+
+.ml-0 {margin-left: 0 !important;}
+.ml-1 {margin-left: 10px !important;}
+.ml-2 {margin-left: 15px !important;}
+.ml-3 {margin-left: 20px !important;}
+
+.mr-0 {margin-right: 0 !important;}
+.mr-1 {margin-right: 10px !important;}
+.mr-2 {margin-right: 15px !important;}
+.mr-3 {margin-right: 20px !important;} 
 
 @media screen and (max-width: 768px) {
     .container {
