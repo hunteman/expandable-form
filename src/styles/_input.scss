@@ -35,19 +35,17 @@
         font-weight: bold;
     }
 
-    &.ng-dirty {
-      &.ng-invalid {
+    &.ng-invalid {
+      &.ng-dirty {
         border-color: var(--error);
       }
     }
 
     &-checkbox {
+        width: fit-content;
         display: block;
         cursor: pointer;
-
-        &:not(:last-child) {
-          margin-bottom: 16px;
-        }
+        margin-bottom: 15px;
 
         .checkbox_mask {
           height: 16px;
@@ -58,6 +56,10 @@
           vertical-align: text-bottom;
           border-radius: 4px;
           margin-right: 4px;
+
+          &._invalid {
+            border-color: var(--error);
+          }
         }
 
         input[type=checkbox] {
